@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "npm run build:web && wrangler deploy",
-    "build:web": "npm --prefix web run build",
+    "build:web": "npm --prefix web install && npm --prefix web run build",
     "db:migrate:local": "wrangler d1 execute strucrite-tracker --local --file=./migrations/0001_init.sql",
     "db:migrate:remote": "wrangler d1 execute strucrite-tracker --remote --file=./migrations/0001_init.sql",
     "db:seed:local": "wrangler d1 execute strucrite-tracker --local --file=./seed/seed.sql",
