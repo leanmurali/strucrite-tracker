@@ -16,7 +16,7 @@ run_worker_first = ["/api/*"]
 [[d1_databases]]
 binding = "DB"
 database_name = "strucrite-tracker"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "4cfe3152-54dd-4f46-ad80-3838b062f5d8"
 
 [[r2_buckets]]
 binding = "EVIDENCE"

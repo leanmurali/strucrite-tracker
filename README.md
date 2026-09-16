@@ -64,7 +64,15 @@ production** — see "Cloudflare Access setup" below.
 
 ## Deploying
 
-### 1. Create the real Cloudflare resources
+### 1. Create the real Cloudflare resources — already done
+
+The `strucrite-tracker` D1 database and the `strucrite-tracker-evidence` R2 bucket already exist in
+your Cloudflare account (created 16-Sep-2026), `wrangler.toml` already has the real
+`database_id`, and the schema plus the full 16-project/672-task seed data have already been
+loaded into that live D1 database — verified with a query against it (16 projects, 42 task
+templates, 24 stages, 672 project_tasks, 80 payment milestones, ₹67.6 Cr balance value, matching
+the local test run exactly). You do **not** need to run the commands below again; they're kept
+here only so you know what was done and can re-run them if you ever need to reset the data:
 
 ```bash
 wrangler d1 create strucrite-tracker
@@ -154,6 +162,7 @@ results — including a portfolio value-at-risk figure (₹67.6 Cr) that lines u
 Sep-16 analysis. The frontend was type-checked and built to a production bundle, and that bundle
 was confirmed to be served correctly by the same Worker alongside the API (single-deploy
 "Workers with static assets" pattern, `run_worker_first: ["/api/*"]` in `wrangler.toml`). What
-was **not** possible in this environment: a real deploy to your Cloudflare account (this session
-can create D1/R2 resources but has no credential to push Worker code — see the architecture spec
-§10), and an interactive Cloudflare Access login (Access isn't running locally).
+was **not** possible in this environment: pushing the actual Worker code to your account (this
+session can create and query D1/R2 resources directly — and did, see "Create the real Cloudflare
+resources" above — but has no credential to deploy a Worker; see the architecture spec §10), and
+an interactive Cloudflare Access login (Access isn't running locally).
