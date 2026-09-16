@@ -1,0 +1,35 @@
+name = "strucrite-tracker-api"
+main = "src/index.ts"
+compatibility_date = "2024-09-25"
+compatibility_flags = ["nodejs_compat"]
+
+# Serves the built React app (web/dist) for every non-/api route, and lets
+# the Worker (src/index.ts) handle /api/*. This is the modern
+# "Workers + static assets" pattern — no separate Cloudflare Pages project
+# needed.
+[assets]
+directory = "./web/dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "strucrite-tracker"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[[r2_buckets]]
+binding = "EVIDENCE"
+bucket_name = "strucrite-tracker-evidence"
+
+# Custom domain — set this up in the Cloudflare dashboard (Workers & Pages ->
+# strucrite-tracker-api -> Settings -> Domains & Routes) once the Worker has
+# been deployed once. Cannot be set purely via this file until the zone is
+# verified in your account.
+# routes = [{ pattern = "strucrite.valueenablers.com", custom_domain = true }]
+
+[vars]
+# Escalation ladder thresholds (days), per Sep-11 Part F, Section 8.3.
+AMBER_MAX_DAYS = "3"
+DUE_SOON_DAYS = "3"
+ENVIRONMENT = "production"
